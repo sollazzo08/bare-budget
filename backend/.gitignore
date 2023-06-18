@@ -1,0 +1,20 @@
+# Mac OS
+.DS_store
+
+# Dependency directories
+node_modules
+
+# dotenv environment variables file
+.env
+
+# Generate Output
+dist
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional eslint cache
+.eslintcache
+
+# Docker
+docker-data

@@ -1,0 +1,69 @@
+
+User:
+- id (integer, primary key, auto increment)
+- username (string, unique)
+- password (string)
+- firstName (string)
+- lastName (string)
+- createdAt (timestamp)
+- updatedAt (timestamp)
+
+Account:
+- id (integer, primary key, auto increment)
+- name (string)
+- balance (decimal)
+- userId (integer, foreign key to User.id)
+- createdAt (timestamp)
+- updatedAt (timestamp)
+
+Category:
+- id (integer, primary key, auto increment)
+- name (string)
+- userId (integer, foreign key to User.id)
+- createdAt (timestamp)
+- updatedAt (timestamp)
+
+TransactionType:
+- id (integer, primary key, auto increment)
+- name (string)
+- userId (integer, foreign key to User.id)
+- createdAt (timestamp)
+- updatedAt (timestamp)
+
+Transaction:
+- id (integer, primary key, auto increment)
+- amount (decimal)
+- date (date)
+- note (string)
+- categoryId (integer, foreign key to Category.id)
+- transactionTypeId (integer, foreign key to TransactionType.id)
+- accountId (integer, foreign key to Account.id)
+- userId (integer, foreign key to User.id)
+- createdAt (timestamp)
+- updatedAt (timestamp)
+
+Notification:
+- id (integer, primary key, auto increment)
+- message (string)
+- read (boolean)
+- userId (integer, foreign key to User.id)
+- createdAt (timestamp)
+- updatedAt (timestamp)
+
+Tag:
+
+id (integer, primary key, auto increment)
+name (string)
+userId (integer, foreign key to User.id)
+createdAt (timestamp)
+updatedAt (timestamp)
+
+TransactionTag:
+id (integer, primary key, auto increment)
+transactionId (integer, foreign key to Transaction.id)
+tagId (integer, foreign key to Tag.id)
+createdAt (timestamp)
+updatedAt (timestamp)
+
+
+
