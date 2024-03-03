@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Buget App to help track my income and spending",
+  "description": "Budget App to help track my income and spending",
   "scripts": {
     "start": "node ./bin/www",
     "build": "tsc --project .",

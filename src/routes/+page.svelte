@@ -1,6 +1,6 @@
 <script>
 import { onMount } from 'svelte';
-const bearer = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg2MTA2MDk3LCJleHAiOjE2ODYxOTI0OTd9.LBE0_U2nrjGbJEjc5uBg5LxbjdLhEzrw4qOwDNdD9MQ';
+const bearer = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA5NDQwNzA5LCJleHAiOjE3MDk1MjcxMDl9.rCWPGfqEKBIxOx00EQfpZo0RKLQpO7mDCIB8foOAxyU';
 
 	let accountTypes = []
 

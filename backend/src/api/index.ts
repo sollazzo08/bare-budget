@@ -24,7 +24,7 @@ router.use('/auth', auth);
 router.use('/users', isLoggedIn, users);
 router.use('/categories', isLoggedIn, categories);
 router.use('/accounts', isLoggedIn, accounts);
-router.use('/account_types', isLoggedIn, accountTypes)
+router.use('/account_types', isLoggedIn, accountTypes);
 
 
 export default router;
