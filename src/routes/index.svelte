@@ -1,6 +1,6 @@
 <script>
     import { goto } from '$app/navigation';
-    import {isAuthenticated, userToken} from '../../store/authStore';
+
 
     let email = '';
     let password = '';
@@ -17,15 +17,10 @@
         const data = await response.json();
         console.log(data);
         if(response.ok){
-           goto('/')
+           goto('/dashboard')
         }
    
    }
-
-
-
-
-
 
 
 </script>

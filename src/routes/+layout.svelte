@@ -5,8 +5,8 @@
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
-	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
-	import Sidebar from './sidebar.svelte';
+	import { AppShell } from '@skeletonlabs/skeleton';
+
 	
 
 
@@ -18,11 +18,8 @@
 
 <!-- App Shell -->
 <AppShell>
-	{#if user.loggedIn}
-	<Sidebar />
-	{/if}
+	
 
 	<slot />
 </AppShell>
-
 
