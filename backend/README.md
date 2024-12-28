@@ -65,7 +65,7 @@ System: PostgreSQL
 Server: db
 Username: your_database_user
 Password: your_database_password
-Database: budget_app_db
+Database: test
 
 
 ## Development

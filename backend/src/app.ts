@@ -9,7 +9,7 @@ import { setUserFromTokenIfValid } from './api/auth/auth.middlewares';
 import { PrismaClient } from '@prisma/client';
 
 const app = express();
-const prisma = new PrismaClient();
+//const prisma = new PrismaClient();
 
 dotenv.config();
 
