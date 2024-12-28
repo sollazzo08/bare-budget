@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -14,8 +15,36 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  createdAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  username   String   @unique @db.VarChar(254)
+  email      String   @db.VarChar(254)
+  password   String   @db.VarChar(127)
+  accounts   Account[]
+  last_login DateTime @db.Date
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  deleted_at DateTime @db.Date
+}
+
+model AccountType {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  deleted_at DateTime? @db.Date
+  accounts   Account[]
+}
+
+model Account {
+  id             Int      @id @default(autoincrement())
+  name           String   @unique @db.VarChar(25)
+  balance        Int
+  user_id        Int
+  account_type_id Int
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  deleted_at     DateTime? @db.Date
+
+  user           User     @relation(fields: [user_id], references: [id])
+  accountType    AccountType @relation(fields: [account_type_id], references: [id])
 }
