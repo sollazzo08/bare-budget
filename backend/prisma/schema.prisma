@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -20,10 +19,30 @@ model User {
   email      String   @db.VarChar(254)
   password   String   @db.VarChar(127)
   accounts   Account[]
+  transactions Transaction[]
+  notifications notification[]
   last_login DateTime @db.Date
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
   deleted_at DateTime @db.Date
+}
+
+
+
+model Account {
+  id             Int      @id @default(autoincrement())
+  name           String   @unique @db.VarChar(25)
+  balance        Int
+  user_id        Int
+  account_type_id Int
+  Transactions    Transaction[]
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  deleted_at     DateTime? @db.Date
+
+  user           User     @relation(fields: [user_id], references: [id])
+  accountType    AccountType @relation(fields: [account_type_id], references: [id])
+
 }
 
 model AccountType {
@@ -35,16 +54,78 @@ model AccountType {
   accounts   Account[]
 }
 
-model Account {
-  id             Int      @id @default(autoincrement())
-  name           String   @unique @db.VarChar(25)
-  balance        Int
-  user_id        Int
-  account_type_id Int
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
-  deleted_at     DateTime? @db.Date
+model Category {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique @db.VarChar(25)
+  transactions  Transaction[]
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deleted_at    DateTime? @db.Date
 
-  user           User     @relation(fields: [user_id], references: [id])
-  accountType    AccountType @relation(fields: [account_type_id], references: [id])
+}
+
+model Transaction {
+  id            Int       @id @default(autoincrement())
+  amount        Int
+  description   String
+  date          DateTime
+  note          String?
+  user_id       Int
+  category_id   Int
+  account_id    Int
+  transaction_type_id Int
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deleted_at    DateTime? @db.Date
+
+  user          User      @relation(fields: [user_id], references: [id])
+  category      Category  @relation(fields: [category_id], references: [id])
+  account       Account   @relation(fields: [account_id], references: [id])
+  transactionType TransactionType @relation(fields: [transaction_type_id], references: [id])
+  tags          TransactionTag[]
+}
+
+model TransactionType {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  Transactions  Transaction[]
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deleted_at    DateTime? @db.Date
+
+}
+
+model Tag {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique @db.VarChar(25)
+  transactions  TransactionTag[]
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deleted_at    DateTime? @db.Date
+
+}
+
+model TransactionTag {
+  id            Int       @id @default(autoincrement())
+  transaction_id Int
+  tag_id        Int
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deleted_at    DateTime? @db.Date
+
+  transaction   Transaction @relation(fields: [transaction_id], references: [id])
+  tag           Tag       @relation(fields: [tag_id], references: [id])
+}
+
+model notification {
+  id            Int       @id @default(autoincrement())
+  user_id       Int
+  message       String
+  read          Boolean
+  notification_type_id Int
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deleted_at    DateTime? @db.Date
+
+  user          User      @relation(fields: [user_id], references: [id])
 }
