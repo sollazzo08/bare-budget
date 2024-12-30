@@ -21,7 +21,7 @@ router.use('/transactions', isLoggedIn, transactions);
 router.use('/transaction_types', isLoggedIn, transactionTypes);
 router.use('/transaction_tags', isLoggedIn, tags)
 router.use('/auth', auth);
-router.use('/users', isLoggedIn, users);
+router.use('/users', users);
 router.use('/categories', isLoggedIn, categories);
 router.use('/accounts', isLoggedIn, accounts);
 router.use('/account_types', isLoggedIn, accountTypes);

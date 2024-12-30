@@ -25,7 +25,7 @@ app.get('/', (req: Request, res: Response) => {
   })
 });
 
-app.use('/api/v1', api);
+app.use('/api/v2', api);
 
 app.use(notFound);
 app.use(errorHandler)
