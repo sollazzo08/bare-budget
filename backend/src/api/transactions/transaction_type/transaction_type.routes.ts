@@ -1,27 +1,26 @@
 import { Router, NextFunction } from "express";
-import { TransactionType } from "./transaction_type.model";
 
 const router = Router();
 
-// Get all TransactionTypes
-router.get('/', async (req, res, next) => {
-    try {
-        const transactionTypes = await TransactionType.query().where('deleted_at', null);
-        res.status(200).json(transactionTypes)
-    } catch (error) {
-        next(error)
-    }
-});
+// // Get all TransactionTypes
+// router.get('/', async (req, res, next) => {
+//     try {
+//         const transactionTypes = await TransactionType.query().where('deleted_at', null);
+//         res.status(200).json(transactionTypes)
+//     } catch (error) {
+//         next(error)
+//     }
+// });
 
-// Get transactionType by Id
-router.get('/:id', async (req, res, next) => {
-    try {
-        const transactionType = await TransactionType.query().findById(req.params.id);
-        res.status(200).json(transactionType);
-    } catch (error) {
-        next(error)
-    }
-});
+// // Get transactionType by Id
+// router.get('/:id', async (req, res, next) => {
+//     try {
+//         const transactionType = await TransactionType.query().findById(req.params.id);
+//         res.status(200).json(transactionType);
+//     } catch (error) {
+//         next(error)
+//     }
+// });
 
 
 

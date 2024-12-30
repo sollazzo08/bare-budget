@@ -1,45 +1,44 @@
 import { Router, Request, NextFunction } from "express"
-import { Tag } from "./tags.model"
 
 const router = Router();
 
-// Get all tags
-router.get('/', async (req, res, next) => {
-    try {
-        const tags = await Tag.query().where('deleted_at', null);
-        res.status(200).json(tags);
-    } catch (error) {
-        next(error);
-    }
-});
+// // Get all tags
+// router.get('/', async (req, res, next) => {
+//     try {
+//         const tags = await Tag.query().where('deleted_at', null);
+//         res.status(200).json(tags);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
-// Get tag by Id
-router.get('/:id', async (req, res, next) => {
-    try {
-        const tag = await Tag.query().findById(req.params.id);
-        res.status(200).json(tag);
-    } catch (error) {
-        next(error);
-    }
-});
+// // Get tag by Id
+// router.get('/:id', async (req, res, next) => {
+//     try {
+//         const tag = await Tag.query().findById(req.params.id);
+//         res.status(200).json(tag);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
 
 
-  // Add Tag to DB
-  router.post('/', async (req: any, res: any, next: NextFunction) => {
-      try {
+//   // Add Tag to DB
+//   router.post('/', async (req: any, res: any, next: NextFunction) => {
+//       try {
         
-        const tag = await Tag.query().insert(req.body);
+//         const tag = await Tag.query().insert(req.body);
 
-        res.status(200).json({
-          message: 'tag created successfully',
-          data: tag
-        })
+//         res.status(200).json({
+//           message: 'tag created successfully',
+//           data: tag
+//         })
 
-      } catch (error) {
-        next(error);
-      }
-    });
+//       } catch (error) {
+//         next(error);
+//       }
+//     });
 
 //   // Update a Account
 //   router.patch('/:id', async (req: any, res, next) => {
