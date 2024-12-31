@@ -21,6 +21,7 @@ model User {
   accounts   Account[]
   transactions Transaction[]
   notifications notification[]
+  budgets    Budget[]
   last_login DateTime @db.Date
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
@@ -64,6 +65,19 @@ model Category {
 
 }
 
+model Budget {
+  id            Int          @id @default(autoincrement())
+  name          String       @db.VarChar(50)
+  amount        Int
+  user_id       Int
+  transactions  Transaction[]
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+  deleted_at    DateTime?    @db.Date
+
+  user          User         @relation(fields: [user_id], references: [id])
+}
+
 model Transaction {
   id            Int       @id @default(autoincrement())
   amount        Int
@@ -73,6 +87,7 @@ model Transaction {
   user_id       Int
   category_id   Int
   account_id    Int
+  budget_id     Int?
   transaction_type_id Int
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
@@ -82,6 +97,7 @@ model Transaction {
   category      Category  @relation(fields: [category_id], references: [id])
   account       Account   @relation(fields: [account_id], references: [id])
   transactionType TransactionType @relation(fields: [transaction_type_id], references: [id])
+  budget        Budget?   @relation(fields: [budget_id], references: [id])
   tags          TransactionTag[]
 }
 

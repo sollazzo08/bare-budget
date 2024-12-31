@@ -1,23 +1,19 @@
 import {Router, Response, Request, NextFunction} from 'express';
+import { getAllTransactions } from './transactions.service';
 
 const router = Router();
 
-// // Get all Transactions
-// router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-//       try {
-//         const transactions = await Transaction.query()
-//         .withGraphFetched('category')
-//         .withGraphFetched('user')
-//         .withGraphFetched('account')
-//         .withGraphFetched('transaction_type')
-//         .whereNull('deleted_at')
-//         .select('id', 'amount', 'date', 'note', 'created_at', 'updated_at');
-//         res.status(200).json(transactions);
+// Get all Transactions
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const transactions = await getAllTransactions();
+      
+        res.status(200).json(transactions);
 
-//       } catch (error) {
-//         next(error)
-//       }
-//   });
+      } catch (error) {
+        next(error)
+      }
+  });
 
 //   // Get Transaction by ID
 //   router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {

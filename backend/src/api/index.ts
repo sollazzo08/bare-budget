@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
   });
 });
 
-router.use('/transactions', isLoggedIn, transactions);
+router.use('/transactions', transactions);
 router.use('/transaction_types', isLoggedIn, transactionTypes);
 router.use('/transaction_tags', isLoggedIn, tags)
 router.use('/auth', auth);
