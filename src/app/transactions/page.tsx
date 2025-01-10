@@ -1,4 +1,5 @@
 import React from 'react';
+import AddTransactionButton from './components/addTransactionsButton';
 
 interface Transaction {
   id: number;
@@ -15,19 +16,19 @@ async function fetchTransactions(): Promise<Transaction[]> {
   return res.json();
 }
 
+
+
+
 export default async function TransactionsPage() {
   const transactions = await fetchTransactions();
+
 
   return (
 <div className="flex flex-col items-center justify-center min-h-screen p-4">
   <h1 className="text-2xl font-bold text-center text-blue-500 mb-4">Transactions Page</h1>
 
   {/* Add Transaction Button */}
-  <button
-    className="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600"
-  >
-    Add Transaction
-  </button>
+  <AddTransactionButton />
 
   {/* Transaction List */}
   <ul className="w-full max-w-md">
