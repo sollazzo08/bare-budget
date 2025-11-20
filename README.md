@@ -94,7 +94,13 @@ Frontend runs on:
 http://localhost:3000
 ```
 
-## API Overview (Backend)
+## Backend Overview (Database Schema + API Overview)
+
+The application uses the following relational schema for users, accounts, transactions, categories, tags, and notifications:
+
+![Bare Budget database schema](./docs/Budget%20App%20DB%20Design%20-%20App%20Architecture%20(1).jpeg)
+
+
 
 The backend implements modular routes for key financial entities.
 
