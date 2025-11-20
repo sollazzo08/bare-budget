@@ -1,4 +1,3 @@
-```markdown
 # Bare Budget
 
 Bare Budget is a full-stack personal finance application designed to help users track income, spending, budgets, categories, and transaction history over time.
@@ -12,34 +11,6 @@ It consists of:
 - A modular, extensible architecture intended for long-term growth
 
 This project is actively in development. Several features are partially implemented or in scaffold form, but the structure is designed to support a complete finance dashboard.
-
----
-
-## Project Structure
-
-```
-
-bare-budget/
-├── backend/          # Node.js + Express + Prisma API
-│   ├── src/
-│   ├── prisma/
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── ...
-│
-├── app/              # Next.js 15 App Router pages
-├── components/       # Reusable UI components
-├── lib/              # Client utilities and helpers
-├── public/           # Static assets
-├── package.json
-├── tsconfig.json
-└── docker-compose.yml
-
-````
-
-The repository is organized so that the backend can evolve independently while being consumed by the Next.js frontend.
-
----
 
 ## Tech Stack
 
@@ -69,7 +40,6 @@ The repository is organized so that the backend can evolve independently while b
 - Nodemon
 - TypeScript path aliases
 
----
 
 ## Getting Started
 
@@ -79,11 +49,8 @@ From the project root:
 
 ```bash
 docker-compose up -d
-````
-
+```
 This launches the local PostgreSQL instance defined in `docker-compose.yml`.
-
----
 
 ### 2. Backend Setup
 
@@ -112,8 +79,6 @@ Backend runs on:
 http://localhost:4000
 ```
 
----
-
 ### 3. Frontend Setup
 
 From the project root:
@@ -128,8 +93,6 @@ Frontend runs on:
 ```
 http://localhost:3000
 ```
-
----
 
 ## API Overview (Backend)
 
@@ -175,8 +138,6 @@ The backend implements modular routes for key financial entities.
 
 All backend routes are strongly typed with TypeScript. Schema validation is planned for future updates.
 
----
-
 ## Frontend Overview
 
 The frontend is built with the Next.js App Router and organizes UI into:
@@ -201,11 +162,9 @@ The frontend is built with the Next.js App Router and organizes UI into:
 
 The UI is in early development but is structured for charts, dynamic budgeting features, and more advanced dashboard tools.
 
----
-
 ## Roadmap
 
-### MVP Goals
+### Goals
 
 * CSV upload and transaction import
 * Normalize merchants via an external normalization module
@@ -213,39 +172,3 @@ The UI is in early development but is structured for charts, dynamic budgeting f
 * Monthly or category-based budgeting
 * Basic dashboard charts and summaries
 
-### Planned Features
-
-* Machine-learning-based auto-categorization
-* Email or in-app notifications
-* Authentication and user management
-* Mobile-optimized UI
-* Shared budgets and multi-user support
-* Export to CSV or Excel
-
----
-
-## Contributing
-
-This is currently a personal development project.
-Suggestions and pull requests are welcome; feel free to open an issue or submit a PR.
-
----
-
-## License
-
-This project is released under the MIT License.
-
-```
-
----
-
-If you'd like, I can also create:
-
-- A separate backend-only README
-- An API reference document
-- A Prisma schema diagram
-- A roadmap page
-- A cleaned-up GitHub-friendly version with badges
-
-Just tell me what you want next.
-```
