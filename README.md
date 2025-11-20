@@ -1,36 +1,251 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+```markdown
+# Bare Budget
+
+Bare Budget is a full-stack personal finance application designed to help users track income, spending, budgets, categories, and transaction history over time.
+
+It consists of:
+
+- A Next.js 15 / React 19 / TypeScript frontend (App Router)
+- A Node.js / Express / TypeScript backend API
+- PostgreSQL with Prisma ORM for data storage
+- Docker for local database setup
+- A modular, extensible architecture intended for long-term growth
+
+This project is actively in development. Several features are partially implemented or in scaffold form, but the structure is designed to support a complete finance dashboard.
+
+---
+
+## Project Structure
+
+```
+
+bare-budget/
+├── backend/          # Node.js + Express + Prisma API
+│   ├── src/
+│   ├── prisma/
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── ...
+│
+├── app/              # Next.js 15 App Router pages
+├── components/       # Reusable UI components
+├── lib/              # Client utilities and helpers
+├── public/           # Static assets
+├── package.json
+├── tsconfig.json
+└── docker-compose.yml
+
+````
+
+The repository is organized so that the backend can evolve independently while being consumed by the Next.js frontend.
+
+---
+
+## Tech Stack
+
+### Frontend
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- TailwindCSS
+- Server Components and Client Components architecture
+
+### Backend
+- Node.js
+- Express
+- TypeScript
+- Prisma ORM
+- (Planned) Zod validation for request schemas
+- REST API design
+
+### Database
+- PostgreSQL via Docker
+- Prisma migrations and schema modeling
+
+### Development Tools
+- Docker and Docker Compose
+- ESLint
+- Prettier
+- Nodemon
+- TypeScript path aliases
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Start the PostgreSQL database
+
+From the project root:
+
+```bash
+docker-compose up -d
+````
+
+This launches the local PostgreSQL instance defined in `docker-compose.yml`.
+
+---
+
+### 2. Backend Setup
+
+Navigate to the backend:
+
+```bash
+cd backend
+npm install
+```
+
+Apply Prisma migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+Start the backend API:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Backend runs on:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:4000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### 3. Frontend Setup
 
-To learn more about Next.js, take a look at the following resources:
+From the project root:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Frontend runs on:
 
-## Deploy on Vercel
+```
+http://localhost:3000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## API Overview (Backend)
+
+The backend implements modular routes for key financial entities.
+
+### Users
+
+* Create user
+* Fetch user details
+* Update user
+* Delete user
+
+### Accounts
+
+* CRUD operations for financial accounts (checking, savings, credit cards, etc.)
+
+### Transactions
+
+* Create transactions manually or via CSV ingestion
+* Query transactions by date range
+* Filter by category or account
+* Update or re-categorize transactions
+
+### Categories
+
+* CRUD operations for categories
+* Planned: automated categorization using machine learning
+
+### Budgets
+
+* Budget rules per category or account
+* Monthly or custom intervals
+
+### Tags
+
+* Tagging system for additional filtering
+
+### Notifications (Planned)
+
+* Budget alerts
+* Overspending notifications
+* General reminders
+
+All backend routes are strongly typed with TypeScript. Schema validation is planned for future updates.
+
+---
+
+## Frontend Overview
+
+The frontend is built with the Next.js App Router and organizes UI into:
+
+### Pages
+
+* Dashboard (in progress)
+* Categories (in progress)
+* Budgets (planned)
+* Accounts (planned)
+* Transactions table (planned)
+
+### Components
+
+* Reusable UI primitives
+* Server-side data fetching patterns
+* Loading and skeleton states
+
+### Styling
+
+* TailwindCSS for layout and responsive design
+
+The UI is in early development but is structured for charts, dynamic budgeting features, and more advanced dashboard tools.
+
+---
+
+## Roadmap
+
+### MVP Goals
+
+* CSV upload and transaction import
+* Normalize merchants via an external normalization module
+* Full CRUD for accounts, categories, budgets, and transactions
+* Monthly or category-based budgeting
+* Basic dashboard charts and summaries
+
+### Planned Features
+
+* Machine-learning-based auto-categorization
+* Email or in-app notifications
+* Authentication and user management
+* Mobile-optimized UI
+* Shared budgets and multi-user support
+* Export to CSV or Excel
+
+---
+
+## Contributing
+
+This is currently a personal development project.
+Suggestions and pull requests are welcome; feel free to open an issue or submit a PR.
+
+---
+
+## License
+
+This project is released under the MIT License.
+
+```
+
+---
+
+If you'd like, I can also create:
+
+- A separate backend-only README
+- An API reference document
+- A Prisma schema diagram
+- A roadmap page
+- A cleaned-up GitHub-friendly version with badges
+
+Just tell me what you want next.
+```
