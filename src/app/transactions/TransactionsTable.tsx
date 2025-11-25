@@ -3,10 +3,10 @@ import React from "react";
 export type Transaction = {
   id: string;
   date: string;
-  account?: string,
+  account: string,
   merchant: string;
-  category?: string;
-  amount: number; // negative = expense, positive = income
+  category: string;
+  amount: number;
 };
 
 type TransactionsTableProps = {

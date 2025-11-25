@@ -2,37 +2,10 @@
 
 import React from "react";
 import TransactionsTable from "./TransactionsTable";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { Filters } from "./Filters";
 
-
-const transactions = [
-    {
-      id: "1",
-      date: "Nov 20",
-      account: "Checking",
-      merchant: "Trader Joe's",
-      category: "Groceries",
-      amount: -82.45,
-    },
-    {
-      id: "2",
-      date: "Nov 19",
-      account: "Checking",
-      merchant: "Rent",
-      category: "Housing",
-      amount: -1200,
-    },
-    {
-      id: "3",
-      date: "Nov 17",
-      account: "Checking",
-      merchant: "Paycheck",
-      category: "Income",
-      amount: 2100,
-    },
-  ];
-
+import { mockTransactions } from "@/lib/mock-transactions";
 
 export default function TransactionsPage() {
 
@@ -41,10 +14,10 @@ export default function TransactionsPage() {
   const [search, setSearch] = useState("");
 
 
-    const filteredTransactions = transactions.filter((tx) => {
-    // account filter (only if your tx has an "account" field)
+    const filteredTransactions = mockTransactions.filter((tx) => {
+    // account filter
     const matchesAccount =
-      account === "all" || tx.account.toLowerCase() === account.toLowerCase(); // adjust field name
+      account === "all" || tx.account.toLowerCase() === account.toLowerCase();
 
     // category filter
     const matchesCategory =
@@ -60,8 +33,11 @@ export default function TransactionsPage() {
 
 
   return (
-    <div className="flex flex-col">
-      <h1 className="text-2xl font-bold text-blue-500 mb-4">Transactions</h1>
+    <div className="flex flex-col p-8">
+      <h1 className="text-2xl font-bold  text-zinc-100">Transactions</h1>
+      <p className="text-sm text-zinc-400">
+        Your transactions at a glance
+      </p>
       <div className="mt-4">
         <Filters
           selectedAccount={account}
