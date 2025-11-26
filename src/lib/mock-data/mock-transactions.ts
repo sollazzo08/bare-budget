@@ -1,4 +1,4 @@
-import { Transaction } from "../app/transactions/TransactionsTable";
+import { Transaction } from "../../app/transactions/TransactionsTable";
 
 export const mockTransactions: Transaction[] = [
   {

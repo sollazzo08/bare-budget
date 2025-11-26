@@ -16,7 +16,7 @@ export function getOverviewSummary(transactions: Transaction[]) {
 
   return {
     income,
-    expenses: Math.abs(expenses),
+    expenses,
     net,
   };
 }

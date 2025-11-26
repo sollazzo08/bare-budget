@@ -12,9 +12,8 @@ function getSpendingStats(transactions: Transaction[]) {
 
   for (const tx of transactions) {
     if (tx.amount >= 0) continue; // skip income / transfers
-
     const current = byDate.get(tx.date) ?? 0;
-    byDate.set(tx.date, current + Math.abs(tx.amount));
+    byDate.set(tx.date, current + tx.amount);
   }
 
   const entries = Array.from(byDate.entries());
@@ -22,10 +21,10 @@ function getSpendingStats(transactions: Transaction[]) {
   const daysWithSpending = entries.length || 1;
   const averagePerDay = totalSpent / daysWithSpending;
 
-  // Sort descending by amount, take top 3 days
+  // Sort descending by amount, take top 5 days
   const topDays = entries
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3)
+    .sort((a, b) => a[1] - b[1])
+    .slice(0, 5)
     .map(([date, value]) => ({ date, amount: value }));
 
   return { totalSpent, averagePerDay, topDays };
