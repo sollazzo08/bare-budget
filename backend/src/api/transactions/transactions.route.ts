@@ -1,111 +1,57 @@
-import {Router, Response, Request, NextFunction} from 'express';
-import { getAllTransactions, addTransaction } from './transactions.service';
+import { Router, Response, Request, NextFunction } from "express";
+import {
+  getAllTransactions,
+  addTransaction,
+  CreateTransactionInput,
+} from "./transactions.service";
 
 const router = Router();
 
 // Get all Transactions
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const transactions = await getAllTransactions();
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // TODO: replace with real auth once I wire JWT/user in
+    const userId = 1;
 
-        res.status(200).json(transactions);
+    const transactions = await getAllTransactions(userId);
 
-      } catch (error) {
-        next(error)
-      }
-  });
+    res.status(200).json(transactions);
+  } catch (error) {
+    next(error);
+  }
+});
 
-//   // Get Transaction by ID
-//   router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-//     try {
+// Add Transaction to DB
+router.post("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // TODO: validate with zod/yup
+    const body = req.body as Partial<CreateTransactionInput>;
 
-//       const transaction = await Transaction.query().findById(req.params.id);
+    // TODO: replace with req.user.id when auth is hooked up
+    const userId = 1;
 
-//       res.status(200).json(transaction)
+    if (!body.accountId || !body.amount || !body.description || !body.date) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
 
-//     } catch (error) {
-//       next(error);
-//     }
-//   });
+    const transaction = await addTransaction({
+      userId,
+      accountId: body.accountId,
+      categoryId: body.categoryId,
+      budgetId: body.budgetId,
+      amount: body.amount,
+      description: body.description,
+      date: body.date,
+      note: body.note,
+    });
 
-//     // Get All Transactions of a specific User
-//     router.get('/user/:user_id', async (req: Request, res: Response, next: NextFunction) => {
-//       try {
-
-//         const transaction = await Transaction.query().where('user_id', req.params.user_id);
-
-//         res.status(200).json(transaction)
-
-//       } catch (error) {
-//         next(error);
-//       }
-//     });
-
-    // Add Transaction to DB
-    router.post('/', async (req: Request, res: Response, next: NextFunction) => {
-        try {
-
-          const transaction = await addTransaction(req.body);
-
-          res.status(200).json({
-            message: 'Transaction created successfully',
-            data: transaction
-          })
-
-        } catch (error) {
-          next(error);
-        }
-      });
-
-//     // Update a transaction
-//     router.patch('/:id', async (req: any, res, next) => {
-//       const transactionId = req.params.id;
-
-//       try {
-//         const transaction: any = await Transaction.query().findById(transactionId);
-
-
-//         const isOwner = transaction && transaction.user_id === req.user.id;
-
-//         if(!isOwner){
-//            const error = new Error('You are not authorized to update this transaction.')
-//            res.status(409);
-//            throw error;
-//         }
-
-//         const updatedTransaction = Object.assign(transaction, req.body);
-
-//         await Transaction.query().where({id: req.params.id}).update(updatedTransaction);
-
-//         res.json(updatedTransaction);
-//       } catch (error) {
-//         next(error);
-//       }
-
-//     });
-
-//     // Delete Transaction from DB
-//     router.delete('/:id', async (req: any, res: Response, next: NextFunction) => {
-//       try {
-
-//           const transaction: any = await Transaction.query().findById(req.params.id);
-
-//           const isOwner = transaction && transaction.user_id === req.user.id;
-
-//          if(!isOwner){
-//             const error = new Error('You are not authorized to delete this transaction.')
-//             res.status(409);
-//             throw error;
-//          }
-
-//          await Transaction.query().where('id', req.params.id).del();
-
-//          res.status(204).json({ message: 'Transaction deleted successfully' });
-
-//       } catch (error) {
-//         next(error);
-//       }
-
-//     });
+    res.status(201).json({
+      message: "Transaction created successfully",
+      data: transaction,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;

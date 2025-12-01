@@ -1,138 +1,114 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create dummy account types
-  const accountType1 = await prisma.accountType.create({
+  // Create a user
+  const user = await prisma.user.create({
     data: {
-      name: 'Checking',
+      username: "mike",
+      email: "mike@example.com",
+      passwordHash: "test-password", // replace when auth added
     },
   });
 
-  const accountType2 = await prisma.accountType.create({
+  // Create accounts for the user
+  const checking = await prisma.account.create({
     data: {
-      name: 'Savings',
+      userId: user.id,
+      name: "TD Checking",
+      type: "checking",
+      balance: 500, // optional; I might compute this later
     },
   });
 
-  // Create dummy users
-  const user1 = await prisma.user.create({
+  const savings = await prisma.account.create({
     data: {
-      username: 'john_doe',
-      email: 'john@example.com',
-      password: 'password123',
-      last_login: new Date(),
-      deleted_at: new Date()
+      userId: user.id,
+      name: "TD High Yield Savings",
+      type: "savings",
+      balance: 1500,
     },
   });
 
-  const user2 = await prisma.user.create({
+  // Create some categories
+  const groceries = await prisma.category.create({
     data: {
-      username: 'jane_doe',
-      email: 'jane@example.com',
-      password: 'password123',
-      last_login: new Date(),
-      deleted_at: new Date(),
+      userId: user.id,
+      name: "Groceries",
     },
   });
 
-  // Create dummy accounts
-  const account1 = await prisma.account.create({
+  const dining = await prisma.category.create({
     data: {
-      name: 'John\'s Checking Account',
-      balance: 1000,
-      user_id: user1.id,
-      account_type_id: accountType1.id,
+      userId: user.id,
+      name: "Dining",
     },
   });
 
-  const account2 = await prisma.account.create({
+  const utilities = await prisma.category.create({
     data: {
-      name: 'Jane\'s Savings Account',
-      balance: 5000,
-      user_id: user2.id,
-      account_type_id: accountType2.id,
+      userId: user.id,
+      name: "Utilities",
     },
   });
 
-  // Create dummy categories
-  const category1 = await prisma.category.create({
+  // Create a budget for the month
+  const novemberBudget = await prisma.budget.create({
     data: {
-      name: 'Groceries',
+      userId: user.id,
+      name: "Groceries Budget",
+      month: new Date("2025-11-01"),
+      amount: 400,
     },
   });
 
-  const category2 = await prisma.category.create({
-    data: {
-      name: 'Entertainment',
-    },
+  // Seed some transactions
+  await prisma.transaction.createMany({
+    data: [
+      {
+        userId: user.id,
+        accountId: checking.id,
+        categoryId: groceries.id,
+        amount: -62.45,
+        description: "Walmart",
+        date: new Date("2025-11-25"),
+      },
+      {
+        userId: user.id,
+        accountId: checking.id,
+        categoryId: dining.id,
+        amount: -18.99,
+        description: "Chipotle",
+        date: new Date("2025-11-28"),
+      },
+      {
+        userId: user.id,
+        accountId: savings.id,
+        categoryId: utilities.id,
+        amount: -75.0,
+        description: "Electric Bill",
+        date: new Date("2025-11-15"),
+      },
+      {
+        userId: user.id,
+        accountId: checking.id,
+        amount: 1500.0,
+        description: "Paycheck",
+        date: new Date("2025-11-01"),
+      },
+    ],
   });
 
-// Create dummy transaction types
-  const transactionType1 = await prisma.transactionType.create({
-    data: {
-      name: 'Income',
-    },
-  });
-
-  const transactionType2 = await prisma.transactionType.create({
-    data: {
-      name: 'Expense',
-    },
-  });
-
-  // Create dummy budgets
-  const budget1 = await prisma.budget.create({
-    data: {
-      name: 'Monthly Groceries',
-      amount: 500,
-      user_id: user1.id,
-    },
-  });
-
-  const budget2 = await prisma.budget.create({
-    data: {
-      name: 'Monthly Entertainment',
-      amount: 200,
-      user_id: user2.id,
-    },
-  });
-
-  // Create dummy transactions
-  await prisma.transaction.create({
-    data: {
-      amount: 50,
-      description: 'Grocery shopping',
-      date: new Date(),
-      user_id: user1.id,
-      category_id: category1.id,
-      account_id: account1.id,
-      budget_id: budget1.id,
-      transaction_type_id: transactionType1.id, // Add appropriate transaction type id
-    },
-  });
-
-  await prisma.transaction.create({
-    data: {
-      amount: 30,
-      description: 'Movie night',
-      date: new Date(),
-      user_id: user2.id,
-      category_id: category2.id,
-      account_id: account2.id,
-      budget_id: budget2.id,
-      transaction_type_id: transactionType2.id, // Add appropriate transaction type id
-      deleted_at: new Date(),
-    },
-  });
+  console.log("🌱 Seed complete!");
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
+  .catch((err) => {
+    console.error("Seed failed:");
+    console.error(err);
     process.exit(1);
   })
-  .finally(async () => {
-    await prisma.$disconnect();
+  .finally(() => {
+    prisma.$disconnect();
   });

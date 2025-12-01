@@ -10,38 +10,39 @@ import UploadCsvButton, {
 
 import { getOverviewSummary } from "@/lib/overview";
 import { formatCurrency } from "@/lib/format";
-import { useTransactions, type Transaction } from "@/lib/useTransactions";
+import { useTransactions } from "@/lib/useTransactions";
+import { Transaction } from "./transactions/TransactionsTable";
 
 export default function Overview() {
   const { transactions, setTransactions } = useTransactions();
 
-const handleUpload = (data: UploadCsvResult) => {
-  console.log("Upload result:", data);
+  const handleUpload = (data: UploadCsvResult) => {
+    console.log("Upload result:", data);
 
-  if (!data.normalized.length) {
-    console.warn("No normalized transactions returned; keeping existing data.");
-    return;
-  }
+    if (!data.normalized.length) {
+      console.warn(
+        "No normalized transactions returned; keeping existing data.",
+      );
+      return;
+    }
 
-  const mapped: Transaction[] = data.normalized.map((tx) => ({
-    id: tx.id,
-    date: tx.date,
-    amount: tx.amount,
-    account: tx.source,
-    merchant:
-      typeof tx.merchantName === "string" && tx.merchantName
-        ? tx.merchantName
-        : tx.rawDescription,
-    category: tx.categoryId ?? "Uncategorized",
-  }));
+    const mapped: Transaction[] = data.normalized.map((tx) => ({
+      id: tx.id,
+      date: tx.date,
+      amount: tx.amount,
+      account: tx.source,
+      merchant:
+        typeof tx.merchantName === "string" && tx.merchantName
+          ? tx.merchantName
+          : tx.rawDescription,
+      category: tx.categoryId ?? "Uncategorized",
+    }));
 
+    console.log("NORMALIZED SAMPLE:", data.normalized[0]);
+    console.log("MAPPED SAMPLE:", mapped[0]);
 
-  console.log("NORMALIZED SAMPLE:", data.normalized[0]);
-  console.log("MAPPED SAMPLE:", mapped[0]);
-
-  setTransactions(mapped);
-};
-
+    setTransactions(mapped);
+  };
 
   const { income, expenses, net } = getOverviewSummary(transactions);
 
